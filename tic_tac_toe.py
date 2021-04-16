@@ -24,8 +24,8 @@ btn7 = StringVar()
 btn8 = StringVar()
 btn9 = StringVar()
 
-xPhoto = PhotoImage(file = 'X.png')
-oPhoto = PhotoImage(file = 'O.png')
+xPhoto = PhotoImage(file = './assets/X.png')
+oPhoto = PhotoImage(file = './assets/O.png')
 
 def play():
     button1 = Button(root,height=9,width=19,bd=.5,relief = 'ridge',bg = '#363636',textvariable = btn1,
@@ -66,6 +66,7 @@ def play():
 
 def press(num,r,c):
     global click,count
+
     if click == True:
         labelPhoto = Label(root,image = xPhoto)
         labelPhoto.grid(row=r,column=c)
