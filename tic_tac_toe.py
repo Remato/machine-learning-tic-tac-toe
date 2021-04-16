@@ -1,10 +1,56 @@
+### Classification ###
+import numpy as np
+import pandas as pd 
+
+from sklearn.model_selection import train_test_split
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
+
+data = pd.read_csv('./data/tic-tac-toe.csv')
+
+def onehot_encode(df, columns):
+    df = df.copy()
+    for column in columns:
+        dummies = pd.get_dummies(df[column], prefix=column)
+        df = pd.concat([df, dummies], axis=1)
+        df = df.drop(column, axis=1)
+    return df
+
+def preprocess_inputs(df):
+    df = df.copy()
+    
+    # Encode label values as numbers
+    df['V10'] = df['V10'].replace({'negative': 0, 'positive': 1})
+    
+    # One-hot encode board space columns
+    df = onehot_encode(
+        df,
+        columns=['V' + str(i) for i in range(1, 10)]
+    )
+    
+    # Split df into X and y
+    y = df['V10'].copy()
+    X = df.drop('V10', axis=1).copy()
+    
+    # Train-test split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.7, random_state=123)
+    
+    return X_train, X_test, y_train, y_test
+
+X_train, X_test, y_train, y_test = preprocess_inputs(data)
+
+print(X_train)
+
+### GAME ###
 from tkinter import Tk, StringVar, PhotoImage, Button, Label
 import tkinter.messagebox
 
+
 root = Tk()
-
-# treinamento do machine learning
-
 
 root.title('Machine Learning Tic Tac Toe')
 
