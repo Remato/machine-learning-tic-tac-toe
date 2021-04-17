@@ -10,6 +10,8 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neural_network import MLPClassifier
 
+from sklearn.naive_bayes import GaussianNB
+
 data = pd.read_csv('./data/tic-tac-toe.csv')
 
 def onehot_encode(df, columns):
@@ -41,9 +43,44 @@ def preprocess_inputs(df):
     
     return X_train, X_test, y_train, y_test
 
+
 X_train, X_test, y_train, y_test = preprocess_inputs(data)
 
-print(X_train)
+models = {
+    "   K-Nearest Neighbors": KNeighborsClassifier(),
+    "   Logistic Regression": LogisticRegression(),
+    "Support Vector Machine": SVC(),
+    "         Decision Tree": DecisionTreeClassifier(),
+    "        Neural Network": MLPClassifier(),
+    "          Naive Bayers": GaussianNB()
+}
+
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    print(name + " trained.")
+
+
+for name, model in models.items():
+    print(name + " Accuracy: {:.2f}%".format(model.score(X_test, y_test) * 100))
+
+
+# selecionando o modelo de bayers
+best_model = models["          Naive Bayers"]
+
+# aqui é onde nos inserimos os dados para ele dar resultado
+# hard_examples = X_test.loc[(best_model.predict([X_test]) != y_test), :]
+# print(hard_examples)
+
+#hard_examples = data.loc[hard_examples.index, :].drop('V10', axis=1)
+
+# print("Difficult Examples:")
+# for i in hard_examples.index:
+#     print("\nExample " + str(i))
+#     print(hard_examples.loc[i, 'V1'] + " " + hard_examples.loc[i, 'V2'] + " " + hard_examples.loc[i, 'V3'])
+#     print(hard_examples.loc[i, 'V4'] + " " + hard_examples.loc[i, 'V5'] + " " + hard_examples.loc[i, 'V6'])
+#     print(hard_examples.loc[i, 'V7'] + " " + hard_examples.loc[i, 'V8'] + " " + hard_examples.loc[i, 'V9'])
+
+
 
 ### GAME ###
 from tkinter import Tk, StringVar, PhotoImage, Button, Label
