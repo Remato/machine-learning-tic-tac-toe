@@ -55,7 +55,7 @@ except:
     with open(pkl_file, 'wb') as file:
         pickle.dump(model, file)
 
-# print('Naive Bayers' + " Accuracy: {:.2f}%".format(model.score(X_test, y_test) * 100))
+# print('Naive Bayes' + " Accuracy: {:.2f}%".format(model.score(X_test, y_test) * 100))
 
 ### ----------------- JOGO ----------------- ###
 from tkinter import Tk, StringVar, PhotoImage, Button, Label, OUTSIDE, LabelFrame
