@@ -95,6 +95,7 @@ btn6 = StringVar()
 btn7 = StringVar()
 btn8 = StringVar()
 btn9 = StringVar()
+
 play1 = StringVar()
 play2 = StringVar()
 
@@ -233,15 +234,6 @@ def checkWin():
         
     global count,click
 
-    # Prevendo resultado apartir do valor atual do tabuleiro.
-
-    df = pd.DataFrame(data=game)
-    prob = model.predict_proba(df)
-    play1.set(str(round(prob[0][1]*100, 4)) + '%')
-    play2.set(str(round(prob[0][0]*100, 4)) + '%')
-
-    # a saida disso aqui é uma [[P(O), P(X)]]
-
     if (btn1.get() == 'X' and btn2.get() == 'X' and btn3.get() == 'X' or
         btn4.get() == 'X' and btn5.get() == 'X' and btn6.get() == 'X' or
         btn7.get() == 'X' and btn8.get() == 'X' and btn9.get() == 'X' or
@@ -275,6 +267,13 @@ def checkWin():
         count = 0
         clear()
         matrix()
+
+    # Prevendo resultado apartir do valor atual do tabuleiro
+    
+    df = pd.DataFrame(data=game)
+    prob = model.predict_proba(df)
+    play1.set(str(round(prob[0][1]*100, 4)) + '%')
+    play2.set(str(round(prob[0][0]*100, 4)) + '%')
 
 def clear():
     btn1.set('')
